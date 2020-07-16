@@ -13,13 +13,21 @@
             PreparedStatement pst;
             ResultSet rs;
             String s_accion;
-            String s_idpersona;
+            String s_idestudiante;
+            
         %>
     </head>
     <body>
         <table border="1" cellspacing="0" cellpadding="" align = "center">
             <thead>
-                <th>ID</th>
+                <tr>
+                    <th colspan="8">
+                        
+                       Datos estudiantes 
+                    </th>                                       
+                </tr>
+                
+                <th>#</th>
                 <th>Nombre</th>
                 <th>Apellidos</th>
                 <th>DNI</th>
@@ -33,22 +41,41 @@
             try{
                 ConectaBd bd = new ConectaBd();
                 cn = bd.getConnection();
+                
+                s_accion = request.getParameter("f_accion");
+                s_idestudiante = request.getParameter("f_idestudiante");
+                if (s_accion !=null) {
+                    if (s_accion.equals("E")) {
+                            consulta =    " delete from estudiante "
+                                        + " where  "
+                                        + " idestudiante = " + s_idestudiante +"; ";
+                            //out.print(consulta);
+                            pst = cn.prepareStatement(consulta);
+                            pst.executeUpdate();
+                        }
+    
+                    
+                    }
+                
                 consulta= " Select idestudiante, nombre, apellidos, dni, codigo, estado "
                         + " from estudiante ";
                 //out.print(consulta);
                 pst = cn.prepareStatement(consulta);
                 rs = pst.executeQuery();
-                
-                while (rs.next()) {    
-                    %>
+                String ide;
+                int num=0;
+                while (rs.next()) {
+                    ide = rs.getString(1);
+                    num ++;
+                 %>   
                     <tr>
-                        <td><%out.print(rs.getString(1));%></td>
+                        <td><%out.print(num);%></td>
                         <td><%out.print(rs.getString(2));%></td>
                         <td><%out.print(rs.getString(3));%></td>
                         <td><%out.print(rs.getString(4));%></td>
                         <td><%out.print(rs.getString(5));%></td>
                         <td><%out.print(rs.getString(6));%></td>
-                        <td>Eliminar</td>
+                        <td><a href="datosestudiante.jsp?f_accion=E&f_idestudiante=<%out.print(ide);%>">Eliminar</a></td> 
                         <td>Modificar</td>
                     </tr>                    
                     <%
