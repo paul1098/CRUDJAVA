@@ -18,7 +18,7 @@
     </head>
     <body>
         <table border="1" cellspacing="0" cellpadding="" align = "center">
-            <thead>
+            <thead >
                 <th>IDCURSO</th>
                 <th>Codigo</th>
                 <th>Nombre</th>
